@@ -1,9 +1,15 @@
-const {Router} = require("express")
+// importa router do express
+const { Router } = require("express");
 
-const SessionsController = require('../controllers/SessionsController')
+// importa o Sessions Controller
+const SessionsController = require("../controllers/SessionsController");
+
+// como eh uma classe iremos instanciar
 const sessionsController = new SessionsController();
 
+// instanciamos o router
 const sessionsRoutes = Router();
-sessionsRoutes.post("/", sessionsController.create)
+// vamos acessar atravez de post na raiz o create
+sessionsRoutes.post("/", sessionsController.create);
 
 module.exports = sessionsRoutes;

@@ -1,24 +1,29 @@
-const path = require('path')
-const multer = require('multer')
-const crypto = require('crypto')
+// importar o path para ajudar a resolver o caminho
+const path = require("path");
+const multer = require("multer");
+const crypto = require("crypto");
 
-const tmp_folder = path.resolve(__dirname, "..", "..", "tmp")
-const uploads_folder = path.resolve(tmp_folder, "uploads")
+// criar nossa pasta temporaria
+const TMP_FOLDER = path.resolve(__dirname,"..", "..", "tmp");
+const UPLOADS_FOLDER = path.resolve(TMP_FOLDER, "uploads");
 
-const Multer = {
-    storage: multer.diskStorage({
-        destination: tmp_folder,
-        filename(request, file, callback){
-            const fileHash = crypto.randomBytes(10).toString('hex')
-            const fileName = `${fileHash}-${file.originalname}`
+// configurar o multer
+const MULTER = {
+  storage: multer.diskStorage({
+    destination: TMP_FOLDER, // para onde vamos enviar o arquivo
+    filename(request, file, callback) {
+      // crypto usado para gerar o nome com um hash aleatorio, para evitar ter arquivos de nomes iguais 
+      // pois se tiver arquivos de nomes iguais ele iera sobrepor o arquivo
+      const fileHash = crypto.randomBytes(10).toString("hex");
+      const fileName = `${fileHash}-${file.originalname}`;
 
-            return callback(null, fileName)
-        }
-    })
-}
+      return callback(null, fileName);
+    },
+  }),
+};
 
 module.exports = {
-    tmp_folder,
-    uploads_folder,
-    Multer,
+  TMP_FOLDER,
+  UPLOADS_FOLDER,
+  MULTER,
 }
